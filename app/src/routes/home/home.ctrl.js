@@ -10,11 +10,13 @@ const output = {
   },
 };
 
+// 임시 계정 DB
 const users = {
   id: ["woorimIT", "나개발", "김팀장"],
   psword: ["1234", "12345", "123456"],
 };
 
+// 로그인 검증 
 const process = {
   login: (req, res) => {
     const id = req.body.id;

@@ -21,6 +21,17 @@ function login() {
   })
     .then((res) => res.json())
     .then((res) => {
+      if (res.success) {
+        location.href = "/";
+      } else {
+        alert(res.msg);
+      }
 
+    })
+    .catch((error) => {
+      console.error(new Error("로그인 중 에러 발생"));
     });
-}
+}   // new Error("abc") 
+    // "abc"
+    // 두 가지 모두 문제는 없지만 출력 형태가 다름  
+
