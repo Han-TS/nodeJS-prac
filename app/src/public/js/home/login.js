@@ -28,7 +28,7 @@ function login() {
       }
 
     })
-    .catch((error) => {
+    .catch((err) => {
       console.error(new Error("로그인 중 에러 발생"));
     });
 }   // new Error("abc") 
