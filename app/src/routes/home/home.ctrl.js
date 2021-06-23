@@ -2,7 +2,7 @@
 
 const User = require('../../models/User');
 
-// 페이지 렌더링 -> index.js 에서 처리
+// 페이지 렌더링 =========================================================
 const output = {
   home: (req, res) => {
     res.render('home/index');
@@ -13,7 +13,7 @@ const output = {
   },
 };
 
-// 로그인 검증 
+// 로그인 검증 ===========================================================
 const process = {
 
   login: (req, res) => {
