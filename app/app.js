@@ -20,6 +20,10 @@ app.use("/", home); //use : 미들 웨어를 등록해주는 메소드.
 
 module.exports = app;
 
+
+
+
+
 // ##########################   express 없이 서버 구축 -> 매우 불편
 // const http = require('http');
 // const app = http.createServer((req, res) => {
