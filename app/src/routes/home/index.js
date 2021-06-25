@@ -12,7 +12,7 @@ router.get('/register', ctrl.output.register);
 
 // POST ====================================================
 router.post('/login', ctrl.process.login);
-router.post('/register', ctrl.output.register);
+router.post('/register', ctrl.process.register);
 
 
 

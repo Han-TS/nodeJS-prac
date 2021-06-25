@@ -17,7 +17,7 @@ const output = {
   }
 };
 
-// 로그인 검증 ===========================================================
+// 로그인, 회원가입 검증================================
 const process = {
   login: async (req, res) => {
     const user = new User(req.body);
@@ -25,9 +25,9 @@ const process = {
     return res.json(response);
   },
 
-  register: (req, res) => {
+  register: async (req, res) => {
     const user = new User(req.body);
-    const response = user.login();
+    const response = await user.register();
     return res.json(response);
   }
 };
