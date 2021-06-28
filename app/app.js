@@ -4,6 +4,8 @@
 const express = require('express');
 const app = express();
 const bodyParser = require("body-parser");
+const dotenv = require("dotenv"); // dotenv : 환경변수 모듈
+dotenv.config();
 
 // 라우팅
 const home = require('./src/routes/home');

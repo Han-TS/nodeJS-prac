@@ -1,67 +1,32 @@
+// DB CRUD 역할 (데이터 검증 및 조작은 User.js에서)
+
 "use strict";
 
-const fs = require("fs").promises;
+const { resolveInclude } = require('ejs');
+const db = require('../config/db');
+
 
 class UserStorage {
-  // class 내부의 변수, 메소드 등을 직접 조회하려면 앞에 static을 붙혀줘야 함.
-  // private 데이터를 불러올 수 있도록 하는 메소드
-  static #getUserInfo(data, id) {
-    const users = JSON.parse(data);
-    const idx = users.id.indexOf(id);
-    const usersKeys = Object.keys(users); // => [id, psword, name]
-    const userInfo = usersKeys.reduce((newUser, info) => {
-      newUser[info] = users[info][idx];
-      return newUser;
-    }, {});
 
-    return userInfo;
-  }
-
-  static #getUsers(data, isAll, fields) {
-    const users = JSON.parse(data);
-    if (isAll) return users;
-
-    const newUsers = fields.reduce((newUsers, field) => {  // reduce((누산기, 초기값, 처리할인덱스, reduce를 호출한 배열, 누산기의 초기값 ) => {}) 
-      if (users.hasOwnProperty(field)) {
-        newUsers[field] = users[field];
-      }
-      return newUsers;
-    }, {});
-    return newUsers;
-  }
-
-
-  static getUsers(isAll, ...fields) { // ...변수명 : 원하는 개수의 변수를 배열의 형태로 받아옴
-    return fs
-      .readFile("./src/databases/users.json")
-      .then((data) => {
-        return this.#getUsers(data, isAll, fields);
-      })
-      .catch(console.error);
-
-  }
-
+  // 유저 정보 조회
   static getUserInfo(id) {
-    return fs
-      .readFile("./src/databases/users.json")
-      .then((data) => {
-        return this.#getUserInfo(data, id);
-      })
-      .catch(console.error);
-
+    return new Promise((resolve, reject) => {
+      const queryString = "SELECT * FROM users WHERE id = ?;";
+      db.query(queryString, [id], (err, data) => {
+        if (err) reject(err);
+        resolve(data[0]);
+      });
+    });
   }
 
   static async save(userInfo) {
-    const users = await this.getUsers(true);
-    if (users.id.includes(userInfo.id)) {
-      throw "이미 존재하는 아이디입니다.";
-    }
-    users.id.push(userInfo.id);
-    users.name.push(userInfo.name);
-    users.psword.push(userInfo.psword);
-    fs.writeFile("./src/databases/users.json", JSON.stringify(users));
-    return { success: true };
-
+    return new Promise((resolve, reject) => {
+      const queryString = "INSERT INTO users(id, name, psword) VALUES(?,?,?);";
+      db.query(queryString, [userInfo.id, userInfo.name, userInfo.psword], (err) => {
+        if (err) reject(`${err}`);
+        resolve({ success: true });
+      });
+    });
   }
 
 }
