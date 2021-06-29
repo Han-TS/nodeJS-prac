@@ -11,10 +11,10 @@ class User {
   async login() {
     const client = this.body;
     try {
-      const { id, psword } = await UserStorage.getUserInfo(client.id);
+      const user = await UserStorage.getUserInfo(client.id);
 
-      if (id) {
-        if (id === client.id && psword === client.psword) {
+      if (user) {
+        if (user.id === client.id && user.psword === client.psword) {
           return { success: true };
         }
         return { success: false, msg: "비밀번호가 틀렸습니다." };
@@ -23,8 +23,9 @@ class User {
     } catch (err) {
       return { success: false, msg: err };
     }
+  };
 
-  }
+
   // 회원가입 검증 ======================================
   async register() {
     const client = this.body;
@@ -34,7 +35,7 @@ class User {
     } catch (err) {
       return { success: false, msg: err };
     }
-
   }
 }
+
 module.exports = User;

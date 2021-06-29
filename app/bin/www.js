@@ -1,8 +1,10 @@
 "use strict";
 
-const app = require('../app.js')
+const app = require('../app.js');
+const logger = require("../src/config/logger");
+
 const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => {
-  console.log('서버 가동');
+  logger.info(`서버 가동 | 포트 번호 : ${PORT}`);
 });
