@@ -3,7 +3,6 @@
 const { createLogger, transports, format } = require("winston");
 const { combine, timestamp, simple, colorize, printf, label } = format;
 
-
 const printFormat = printf(({ timestamp, label, level, message }) => {
   return `${timestamp} [${label}] ${level} : ${message}`;
 })

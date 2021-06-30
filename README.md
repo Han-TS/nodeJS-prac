@@ -1,2 +1,2 @@
-# login - lecture
-백엔드 맛보기 
+# login 구현
+Node.js 백엔드 연습
